@@ -146,7 +146,7 @@ class APIClient {
 
     // Get email service status
     async getEmailStatus() {
-        return this.request('/email/status');
+        return this.request('/services/email/status');
     }
 
     // Health check

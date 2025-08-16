@@ -10,11 +10,11 @@ const { emailService } = require('../services/emailService');
  * GET /api/services/status
  * Get status of all services (AI and Email)
  */
-router.get('/status', async (req, res) => {
+router.get('/services/status', async (req, res) => {
     try {
         // Get AI services status
         const aiServicesStatus = await aiServiceManager.validateServices();
-
+        
         // Get email service status
         let emailStatus;
         try {
@@ -48,7 +48,7 @@ router.get('/status', async (req, res) => {
         // Determine overall system health
         const aiHealthy = Object.values(aiServicesStatus).some(service => service.status === 'healthy');
         const emailHealthy = emailStatus.status === 'healthy';
-
+        
         const overallStatus = {
             healthy: aiHealthy && emailHealthy,
             ai: aiHealthy,
@@ -80,11 +80,11 @@ router.get('/status', async (req, res) => {
  * GET /api/services/ai/status
  * Get detailed AI services status
  */
-router.get('/ai/status', async (req, res) => {
+router.get('/services/ai/status', async (req, res) => {
     try {
         const aiServicesStatus = await aiServiceManager.validateServices();
         const servicesInfo = aiServiceManager.getServicesStatus();
-
+        
         res.json({
             status: 'success',
             timestamp: new Date().toISOString(),
@@ -107,10 +107,10 @@ router.get('/ai/status', async (req, res) => {
  * GET /api/services/email/status
  * Get detailed email service status
  */
-router.get('/email/status', async (req, res) => {
+router.get('/services/email/status', async (req, res) => {
     try {
         let emailStatus;
-
+        
         if (emailService.isConfigured()) {
             const testResult = await emailService.testConfiguration();
             emailStatus = {
@@ -157,10 +157,10 @@ router.get('/email/status', async (req, res) => {
  * POST /api/services/email/test
  * Test email service by sending a test email
  */
-router.post('/email/test', async (req, res) => {
+router.post('/services/email/test', async (req, res) => {
     try {
         const { recipient } = req.body;
-
+        
         if (!recipient) {
             return res.status(400).json({
                 error: 'Validation Error',
@@ -177,7 +177,7 @@ router.post('/email/test', async (req, res) => {
 
         // Validate recipient email
         const { validEmails, errors } = emailService.validateEmails([recipient]);
-
+        
         if (errors.length > 0) {
             return res.status(400).json({
                 error: 'Validation Error',
@@ -241,7 +241,7 @@ You can safely ignore this email.`,
  * POST /api/services/ai/test
  * Test AI service by generating a test summary
  */
-router.post('/ai/test', async (req, res) => {
+router.post('/services/ai/test', async (req, res) => {
     try {
         const testTranscript = `Test Meeting Transcript
 
@@ -299,7 +299,7 @@ function generateRecommendations(aiServicesStatus, emailStatus) {
     // AI service recommendations
     const aiServices = Object.entries(aiServicesStatus);
     const healthyAiServices = aiServices.filter(([, status]) => status.status === 'healthy');
-
+    
     if (healthyAiServices.length === 0) {
         recommendations.push({
             type: 'critical',
