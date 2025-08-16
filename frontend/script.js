@@ -141,12 +141,12 @@ class APIClient {
 
     // Get AI services status
     async getServicesStatus() {
-        return this.request('/api/services/status');
+        return this.request('/services/status');
     }
 
     // Get email service status
     async getEmailStatus() {
-        return this.request('/api/services/email/status');
+        return this.request('/services/email/status');
     }
 
     // Health check
