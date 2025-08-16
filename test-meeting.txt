@@ -1,0 +1,16 @@
+This is a test meeting transcript.
+
+Meeting Date: January 15, 2024
+Attendees: John, Sarah, Mike
+
+Discussion Points:
+1. Project timeline review
+2. Budget allocation
+3. Next steps planning
+
+Action Items:
+- John to finalize the proposal by Friday
+- Sarah to coordinate with the design team
+- Mike to prepare the technical specifications
+
+Next Meeting: January 22, 2024

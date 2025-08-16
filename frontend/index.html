@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Meeting Notes Summarizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>AI Meeting Notes Summarizer</h1>
+                    <p class="app-description">Upload meeting transcripts, customize instructions, and generate AI-powered summaries</p>
+                </div>
+                <div class="header-actions">
+                    <button type="button" id="clear-all-btn" class="btn btn-outline btn-small">
+                        🗑️ Start New
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="app-main">
+            <!-- Step 1: File Upload Section -->
+            <section id="upload-section" class="workflow-section active">
+                <div class="section-header">
+                    <h2>Step 1: Upload Transcript</h2>
+                    <div class="step-indicator">1 of 4</div>
+                </div>
+                
+                <div class="upload-container">
+                    <div id="file-drop-zone" class="file-drop-zone">
+                        <div class="drop-zone-content">
+                            <div class="upload-icon">📄</div>
+                            <p class="drop-zone-text">Drag and drop your transcript file here</p>
+                            <p class="drop-zone-subtext">or</p>
+                            <button type="button" class="btn btn-secondary" id="file-select-btn">Choose File</button>
+                            <input type="file" id="file-input" accept=".txt,.md,.rtf" hidden>
+                        </div>
+                    </div>
+                    
+                    <div class="file-info">
+                        <p class="supported-formats">Supported formats: .txt, .md, .rtf</p>
+                        <div id="upload-progress" class="upload-progress hidden">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <span class="progress-text">Uploading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="file-preview" class="file-preview hidden">
+                    <h3>File Preview</h3>
+                    <div class="file-details">
+                        <span id="file-name" class="file-name"></span>
+                        <span id="file-size" class="file-size"></span>
+                    </div>
+                    <div id="transcript-preview" class="transcript-preview"></div>
+                </div>
+
+                <div class="section-actions">
+                    <button type="button" id="continue-to-instructions" class="btn btn-primary" disabled>
+                        Continue to Instructions
+                    </button>
+                </div>
+            </section>
+
+            <!-- Step 2: Custom Instructions Section -->
+            <section id="instructions-section" class="workflow-section">
+                <div class="section-header">
+                    <h2>Step 2: Customize Instructions</h2>
+                    <div class="step-indicator">2 of 4</div>
+                </div>
+
+                <div class="instructions-container">
+                    <div class="template-options">
+                        <h3>Quick Templates</h3>
+                        <div class="template-buttons">
+                            <button type="button" class="template-btn" data-template="executive">Executive Summary</button>
+                            <button type="button" class="template-btn" data-template="action-items">Action Items</button>
+                            <button type="button" class="template-btn" data-template="detailed">Detailed Summary</button>
+                            <button type="button" class="template-btn" data-template="custom">Custom</button>
+                        </div>
+                    </div>
+
+                    <div class="instruction-input">
+                        <label for="custom-instructions">Summarization Instructions</label>
+                        <textarea 
+                            id="custom-instructions" 
+                            class="instruction-textarea"
+                            placeholder="Enter your custom instructions for how you want the meeting summarized..."
+                            rows="6"
+                        ></textarea>
+                        <div class="input-feedback">
+                            <span id="char-count" class="char-count">0 characters</span>
+                            <div id="instruction-help" class="help-text">
+                                <strong>Example:</strong> "Create a summary with key decisions, action items with owners, and next steps. Focus on technical discussions and timeline commitments."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-actions">
+                    <button type="button" id="back-to-upload" class="btn btn-secondary">Back</button>
+                    <button type="button" id="continue-to-summary" class="btn btn-primary">
+                        Generate Summary
+                    </button>
+                </div>
+            </section>
+
+            <!-- Step 3: Summary Generation and Display Section -->
+            <section id="summary-section" class="workflow-section">
+                <div class="section-header">
+                    <h2>Step 3: AI Summary</h2>
+                    <div class="step-indicator">3 of 4</div>
+                </div>
+
+                <div id="generation-status" class="generation-status">
+                    <div class="status-content">
+                        <div class="loading-spinner hidden">
+                            <div class="spinner"></div>
+                        </div>
+                        <p id="status-message" class="status-message">Ready to generate summary</p>
+                        <button type="button" id="retry-generation" class="btn btn-secondary hidden">Retry</button>
+                    </div>
+                </div>
+
+                <div id="summary-display" class="summary-display hidden">
+                    <div class="summary-header">
+                        <h3>Generated Summary</h3>
+                        <div class="summary-meta">
+                            <span id="summary-word-count" class="word-count"></span>
+                            <span id="generation-time" class="generation-time"></span>
+                        </div>
+                    </div>
+                    <div id="summary-content" class="summary-content"></div>
+                </div>
+
+                <div class="section-actions">
+                    <button type="button" id="back-to-instructions" class="btn btn-secondary">Back</button>
+                    <button type="button" id="continue-to-edit" class="btn btn-primary" disabled>
+                        Edit Summary
+                    </button>
+                </div>
+            </section>
+
+            <!-- Step 4: Summary Editing Section -->
+            <section id="editing-section" class="workflow-section">
+                <div class="section-header">
+                    <h2>Step 4: Edit & Share</h2>
+                    <div class="step-indicator">4 of 4</div>
+                </div>
+
+                <div class="editing-container">
+                    <div class="editor-toolbar">
+                        <h3>Edit Summary</h3>
+                        <div class="editor-controls">
+                            <span id="edit-word-count" class="word-count"></span>
+                            <div class="save-status">
+                                <span id="save-status" class="save-indicator">Saved</span>
+                                <button type="button" id="manual-save" class="btn btn-small">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="editor-area">
+                        <textarea 
+                            id="summary-editor" 
+                            class="summary-editor"
+                            placeholder="Your summary will appear here for editing..."
+                            rows="12"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <div class="sharing-container">
+                    <h3>Share Summary</h3>
+                    
+                    <div class="email-form">
+                        <div class="form-group">
+                            <label for="email-recipients">Recipients</label>
+                            <input 
+                                type="email" 
+                                id="email-recipients" 
+                                class="email-input"
+                                placeholder="Enter email addresses separated by commas"
+                                multiple
+                            >
+                            <div class="input-help">Separate multiple emails with commas</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email-subject">Subject</label>
+                            <input 
+                                type="text" 
+                                id="email-subject" 
+                                class="subject-input"
+                                placeholder="Meeting Summary - [Date]"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email-message">Custom Message (Optional)</label>
+                            <textarea 
+                                id="email-message" 
+                                class="message-textarea"
+                                placeholder="Add a personal message to include with the summary..."
+                                rows="3"
+                            ></textarea>
+                        </div>
+
+                        <div class="email-actions">
+                            <button type="button" id="preview-email" class="btn btn-secondary">Preview</button>
+                            <button type="button" id="send-email" class="btn btn-primary" disabled>
+                                Send Summary
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-actions">
+                    <button type="button" id="back-to-summary" class="btn btn-secondary">Back</button>
+                    <button type="button" id="start-new" class="btn btn-outline">Start New Summary</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Global Messages and Modals -->
+        <div id="message-container" class="message-container"></div>
+        
+        <div id="email-preview-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Email Preview</h3>
+                    <button type="button" class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="email-preview-content" class="email-preview"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirm-send">Send Email</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# Production Monitoring Cron Jobs
+# Add these to your server's crontab to monitor the application
+
+# Health check every 5 minutes
+*/5 * * * * /path/to/your/scripts/health-check.sh https://your-app.vercel.app https://your-slack-webhook-url
+
+# Daily deployment verification
+0 6 * * * /usr/bin/node /path/to/your/scripts/verify-deployment.js https://your-app.vercel.app
+
+# Weekly performance report (if you have additional monitoring tools)
+0 9 * * 1 /path/to/your/scripts/performance-report.sh https://your-app.vercel.app
+
+# Example Slack webhook setup:
+# 1. Go to your Slack workspace
+# 2. Create a new app or use existing one
+# 3. Add Incoming Webhooks feature
+# 4. Create a webhook for your channel
+# 5. Use the webhook URL in the cron jobs above
+
+# To install these cron jobs:
+# 1. Save this content to a file (e.g., monitoring-cron.txt)
+# 2. Update the paths and URLs
+# 3. Run: crontab monitoring-cron.txt
+# 4. Verify with: crontab -l

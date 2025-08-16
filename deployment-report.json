@@ -1,0 +1,95 @@
+{
+  "timestamp": "2025-08-16T11:24:03.384Z",
+  "baseUrl": "http://localhost:3000",
+  "summary": {
+    "total": 7,
+    "passed": 0,
+    "failed": 7,
+    "successRate": 0
+  },
+  "tests": [
+    {
+      "name": "Health Endpoint",
+      "success": false,
+      "message": "",
+      "error": true
+    },
+    {
+      "name": "Root Endpoint",
+      "success": false,
+      "message": "",
+      "error": true
+    },
+    {
+      "name": "Frontend Files",
+      "success": false,
+      "message": "Failed to load files: index.html, script.js, styles.css",
+      "details": [
+        {
+          "file": "index.html",
+          "statusCode": 0,
+          "success": false,
+          "error": ""
+        },
+        {
+          "file": "script.js",
+          "statusCode": 0,
+          "success": false,
+          "error": ""
+        },
+        {
+          "file": "styles.css",
+          "statusCode": 0,
+          "success": false,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "name": "API Endpoints Structure",
+      "success": false,
+      "message": "Unavailable endpoints: /api/upload, /api/summarize, /api/share",
+      "details": [
+        {
+          "path": "/api/upload",
+          "method": "POST",
+          "statusCode": 0,
+          "available": false,
+          "error": ""
+        },
+        {
+          "path": "/api/summarize",
+          "method": "POST",
+          "statusCode": 0,
+          "available": false,
+          "error": ""
+        },
+        {
+          "path": "/api/share",
+          "method": "POST",
+          "statusCode": 0,
+          "available": false,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "name": "CORS Configuration",
+      "success": false,
+      "message": "",
+      "error": true
+    },
+    {
+      "name": "Security Headers",
+      "success": false,
+      "message": "",
+      "error": true
+    },
+    {
+      "name": "Environment Configuration",
+      "success": false,
+      "message": "",
+      "error": true
+    }
+  ]
+}

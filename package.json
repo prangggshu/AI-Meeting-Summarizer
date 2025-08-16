@@ -1,0 +1,60 @@
+{
+  "name": "ai-meeting-notes-summarizer",
+  "version": "1.0.0",
+  "description": "AI-powered meeting notes summarizer and sharing application",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "build": "npm run lint && npm run test",
+    "build:vercel": "echo 'Vercel build completed - static files ready'",
+    "build:netlify": "npm install && echo 'Netlify build completed - functions and static files ready'",
+    "lint": "eslint backend/ --ext .js",
+    "lint:fix": "eslint backend/ --ext .js --fix",
+    "vercel-build": "npm run build",
+    "netlify-build": "npm run build:netlify",
+    "postinstall": "echo 'Dependencies installed successfully'",
+    "prestart": "node -e \"console.log('Starting AI Meeting Notes Summarizer...')\"",
+    "health-check": "node -e \"require('http').get('http://localhost:3000/health', res => { console.log('Health check:', res.statusCode === 200 ? 'OK' : 'FAILED'); process.exit(res.statusCode === 200 ? 0 : 1); }).on('error', () => { console.log('Health check: FAILED'); process.exit(1); });\"",
+    "deploy:validate": "node scripts/deploy-vercel.js",
+    "deploy:staging": "npm run deploy:validate && vercel --config vercel-staging.json",
+    "deploy:production": "npm run deploy:validate && vercel --prod",
+    "deploy:vercel": "npm run deploy:production",
+    "deploy:netlify": "netlify deploy --prod",
+    "verify:deployment": "node scripts/verify-deployment.js",
+    "setup:monitoring": "node scripts/setup-monitoring.js",
+    "monitor:performance": "node scripts/performance-monitor.js",
+    "test:production": "npm run verify:deployment"
+  },
+  "keywords": [
+    "ai",
+    "meeting-notes",
+    "summarizer",
+    "nodejs",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "joi": "^17.11.0",
+    "lambda-multipart-parser": "^1.0.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.7",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.53.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
