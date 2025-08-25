@@ -4,99 +4,173 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Meeting Notes Summarizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app">
-        <header class="app-header">
+    <div id="app" class="app-container">
+        <div class="background-gradient"></div>
+        <header class="app-header glass-card">
             <div class="header-content">
                 <div class="header-text">
-                    <h1>AI Meeting Notes Summarizer</h1>
-                    <p class="app-description">Upload meeting transcripts, customize instructions, and generate AI-powered summaries</p>
+                    <div class="logo-container">
+                        <div class="logo-icon">🤖</div>
+                        <h1>AI Meeting Notes Summarizer</h1>
+                    </div>
+                    <p class="app-description">Transform your meeting transcripts into actionable insights with AI-powered summarization</p>
                 </div>
                 <div class="header-actions">
-                    <button type="button" id="clear-all-btn" class="btn btn-outline btn-small">
-                        🗑️ Start New
+                    <button type="button" id="clear-all-btn" class="btn btn-outline btn-small modern-btn">
+                        <span class="btn-icon">🗑️</span>
+                        <span>Start New</span>
                     </button>
                 </div>
             </div>
         </header>
 
-        <main class="app-main">
+        <main class="app-main container">
             <!-- Step 1: File Upload Section -->
-            <section id="upload-section" class="workflow-section active">
+            <section id="upload-section" class="workflow-section active glass-card">
                 <div class="section-header">
-                    <h2>Step 1: Upload Transcript</h2>
-                    <div class="step-indicator">1 of 4</div>
+                    <div class="section-title">
+                        <div class="step-number">01</div>
+                        <h2>Upload Transcript</h2>
+                    </div>
+                    <div class="step-indicator">
+                        <span class="step-text">Step 1 of 4</span>
+                        <div class="progress-dots">
+                            <div class="dot active"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="upload-container">
-                    <div id="file-drop-zone" class="file-drop-zone">
+                <div class="upload-container modern-card">
+                    <div id="file-drop-zone" class="file-drop-zone modern-upload">
                         <div class="drop-zone-content">
-                            <div class="upload-icon">📄</div>
-                            <p class="drop-zone-text">Drag and drop your transcript file here</p>
-                            <p class="drop-zone-subtext">or</p>
-                            <button type="button" class="btn btn-secondary" id="file-select-btn">Choose File</button>
+                            <div class="upload-icon-container">
+                                <div class="upload-icon">📄</div>
+                                <div class="upload-animation"></div>
+                            </div>
+                            <h3 class="drop-zone-title">Drop your transcript here</h3>
+                            <p class="drop-zone-text">Drag and drop your meeting transcript file</p>
+                            <div class="divider">
+                                <span>or</span>
+                            </div>
+                            <button type="button" class="btn btn-primary modern-btn" id="file-select-btn">
+                                <span class="btn-icon">📁</span>
+                                <span>Choose File</span>
+                            </button>
                             <input type="file" id="file-input" accept=".txt,.md,.rtf" hidden>
                         </div>
                     </div>
                     
                     <div class="file-info">
-                        <p class="supported-formats">Supported formats: .txt, .md, .rtf</p>
-                        <div id="upload-progress" class="upload-progress hidden">
+                        <div class="supported-formats">
+                            <span class="format-label">Supported formats:</span>
+                            <div class="format-tags">
+                                <span class="format-tag">.txt</span>
+                                <span class="format-tag">.md</span>
+                                <span class="format-tag">.rtf</span>
+                            </div>
+                        </div>
+                        <div id="upload-progress" class="upload-progress modern-progress hidden">
                             <div class="progress-bar">
                                 <div class="progress-fill"></div>
                             </div>
-                            <span class="progress-text">Uploading...</span>
+                            <div class="progress-info">
+                                <span class="progress-text">Uploading...</span>
+                                <span class="progress-percent">0%</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="file-preview" class="file-preview hidden">
-                    <h3>File Preview</h3>
-                    <div class="file-details">
-                        <span id="file-name" class="file-name"></span>
-                        <span id="file-size" class="file-size"></span>
+                <div id="file-preview" class="file-preview modern-card hidden">
+                    <div class="preview-header">
+                        <h3>📄 File Preview</h3>
+                        <div class="file-details">
+                            <div class="file-detail">
+                                <span class="detail-label">Name:</span>
+                                <span id="file-name" class="file-name"></span>
+                            </div>
+                            <div class="file-detail">
+                                <span class="detail-label">Size:</span>
+                                <span id="file-size" class="file-size"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div id="transcript-preview" class="transcript-preview"></div>
+                    <div id="transcript-preview" class="transcript-preview modern-code"></div>
                 </div>
 
                 <div class="section-actions">
-                    <button type="button" id="continue-to-instructions" class="btn btn-primary" disabled>
-                        Continue to Instructions
+                    <button type="button" id="continue-to-instructions" class="btn btn-primary modern-btn btn-large" disabled>
+                        <span>Continue to Instructions</span>
+                        <span class="btn-arrow">→</span>
                     </button>
                 </div>
             </section>
 
             <!-- Step 2: Custom Instructions Section -->
-            <section id="instructions-section" class="workflow-section">
+            <section id="instructions-section" class="workflow-section glass-card">
                 <div class="section-header">
-                    <h2>Step 2: Customize Instructions</h2>
-                    <div class="step-indicator">2 of 4</div>
+                    <div class="section-title">
+                        <div class="step-number">02</div>
+                        <h2>Customize Instructions</h2>
+                    </div>
+                    <div class="step-indicator">
+                        <span class="step-text">Step 2 of 4</span>
+                        <div class="progress-dots">
+                            <div class="dot completed"></div>
+                            <div class="dot active"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="instructions-container">
-                    <div class="template-options">
-                        <h3>Quick Templates</h3>
+                <div class="instructions-container modern-card">
+                    <div class="template-options modern-templates">
+                        <h3>✨ Quick Templates</h3>
                         <div class="template-buttons">
-                            <button type="button" class="template-btn" data-template="executive">Executive Summary</button>
-                            <button type="button" class="template-btn" data-template="action-items">Action Items</button>
-                            <button type="button" class="template-btn" data-template="detailed">Detailed Summary</button>
-                            <button type="button" class="template-btn" data-template="custom">Custom</button>
+                            <button type="button" class="template-btn modern-template-btn" data-template="executive">
+                                <span class="template-icon">👔</span>
+                                <span>Executive Summary</span>
+                            </button>
+                            <button type="button" class="template-btn modern-template-btn" data-template="action-items">
+                                <span class="template-icon">✅</span>
+                                <span>Action Items</span>
+                            </button>
+                            <button type="button" class="template-btn modern-template-btn" data-template="detailed">
+                                <span class="template-icon">📋</span>
+                                <span>Detailed Summary</span>
+                            </button>
+                            <button type="button" class="template-btn modern-template-btn" data-template="custom">
+                                <span class="template-icon">✏️</span>
+                                <span>Custom</span>
+                            </button>
                         </div>
                     </div>
 
-                    <div class="instruction-input">
-                        <label for="custom-instructions">Summarization Instructions</label>
+                    <div class="instruction-input modern-input-group">
+                        <label for="custom-instructions" class="modern-label">
+                            <span class="label-icon">📝</span>
+                            <span>Summarization Instructions</span>
+                        </label>
                         <textarea 
                             id="custom-instructions" 
-                            class="instruction-textarea"
+                            class="instruction-textarea modern-textarea"
                             placeholder="Enter your custom instructions for how you want the meeting summarized..."
                             rows="6"
                         ></textarea>
                         <div class="input-feedback">
-                            <span id="char-count" class="char-count">0 characters</span>
-                            <div id="instruction-help" class="help-text">
+                            <span id="char-count" class="char-count modern-counter">0 characters</span>
+                            <div id="instruction-help" class="help-text modern-help">
+                                <span class="help-icon">💡</span>
                                 <strong>Example:</strong> "Create a summary with key decisions, action items with owners, and next steps. Focus on technical discussions and timeline commitments."
                             </div>
                         </div>
@@ -104,27 +178,41 @@
                 </div>
 
                 <div class="section-actions">
-                    <button type="button" id="back-to-upload" class="btn btn-secondary">Back</button>
-                    <button type="button" id="continue-to-summary" class="btn btn-primary">
+                    <button type="button" id="back-to-upload" class="btn btn-secondary modern-btn">
+                        <span class="btn-arrow">←</span>
+                        <span>Back</span>
+                    </button>
+                    <button type="button" id="continue-to-summary" class="btn btn-primary modern-btn btn-large">
                         Generate Summary
                     </button>
                 </div>
             </section>
 
             <!-- Step 3: Summary Generation and Display Section -->
-            <section id="summary-section" class="workflow-section">
+            <section id="summary-section" class="workflow-section glass-card">
                 <div class="section-header">
-                    <h2>Step 3: AI Summary</h2>
-                    <div class="step-indicator">3 of 4</div>
+                    <div class="section-title">
+                        <div class="step-number">03</div>
+                        <h2>AI Summary</h2>
+                    </div>
+                    <div class="step-indicator">
+                        <span class="step-text">Step 3 of 4</span>
+                        <div class="progress-dots">
+                            <div class="dot completed"></div>
+                            <div class="dot completed"></div>
+                            <div class="dot active"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
                 </div>
 
-                <div id="generation-status" class="generation-status">
+                <div id="generation-status" class="generation-status modern-status">
                     <div class="status-content">
-                        <div class="loading-spinner hidden">
-                            <div class="spinner"></div>
+                        <div class="loading-spinner modern-spinner hidden">
+                            <div class="spinner-ring"></div>
                         </div>
-                        <p id="status-message" class="status-message">Ready to generate summary</p>
-                        <button type="button" id="retry-generation" class="btn btn-secondary hidden">Retry</button>
+                        <p id="status-message" class="status-message modern-status-text">Ready to generate summary</p>
+                        <button type="button" id="retry-generation" class="btn btn-secondary modern-btn hidden">Retry</button>
                     </div>
                 </div>
 
@@ -132,36 +220,63 @@
                     <div class="summary-header">
                         <h3>Generated Summary</h3>
                         <div class="summary-meta">
-                            <span id="summary-word-count" class="word-count"></span>
-                            <span id="generation-time" class="generation-time"></span>
+                            <div class="meta-item">
+                                <span class="meta-icon">📊</span>
+                                <span id="summary-word-count" class="word-count"></span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-icon">⏱️</span>
+                                <span id="generation-time" class="generation-time"></span>
+                            </div>
                         </div>
                     </div>
-                    <div id="summary-content" class="summary-content"></div>
+                    <div id="summary-content" class="summary-content modern-content"></div>
                 </div>
 
                 <div class="section-actions">
-                    <button type="button" id="back-to-instructions" class="btn btn-secondary">Back</button>
-                    <button type="button" id="continue-to-edit" class="btn btn-primary" disabled>
-                        Edit Summary
+                    <button type="button" id="back-to-instructions" class="btn btn-secondary modern-btn">
+                        <span class="btn-arrow">←</span>
+                        <span>Back</span>
+                    </button>
+                    <button type="button" id="continue-to-edit" class="btn btn-primary modern-btn btn-large" disabled>
+                        <span>Edit Summary</span>
+                        <span class="btn-arrow">→</span>
                     </button>
                 </div>
             </section>
 
             <!-- Step 4: Summary Editing Section -->
-            <section id="editing-section" class="workflow-section">
+            <section id="editing-section" class="workflow-section glass-card">
                 <div class="section-header">
-                    <h2>Step 4: Edit & Share</h2>
-                    <div class="step-indicator">4 of 4</div>
+                    <div class="section-title">
+                        <div class="step-number">04</div>
+                        <h2>Edit & Share</h2>
+                    </div>
+                    <div class="step-indicator">
+                        <span class="step-text">Step 4 of 4</span>
+                        <div class="progress-dots">
+                            <div class="dot completed"></div>
+                            <div class="dot completed"></div>
+                            <div class="dot completed"></div>
+                            <div class="dot active"></div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="editing-container">
+                <div class="editing-container modern-card">
                     <div class="editor-toolbar">
-                        <h3>Edit Summary</h3>
+                        <h3>✏️ Edit Summary</h3>
                         <div class="editor-controls">
-                            <span id="edit-word-count" class="word-count"></span>
+                            <div class="control-item">
+                                <span class="control-icon">📊</span>
+                                <span id="edit-word-count" class="word-count"></span>
+                            </div>
                             <div class="save-status">
-                                <span id="save-status" class="save-indicator">Saved</span>
-                                <button type="button" id="manual-save" class="btn btn-small">Save</button>
+                                <span id="save-status" class="save-indicator modern-indicator">
+                                    <span class="indicator-dot"></span>
+                                    <span>Saved</span>
+                                </span>
+                                <button type="button" id="manual-save" class="btn btn-small modern-btn">Save</button>
                             </div>
                         </div>
                     </div>
@@ -169,80 +284,105 @@
                     <div class="editor-area">
                         <textarea 
                             id="summary-editor" 
-                            class="summary-editor"
+                            class="summary-editor modern-editor"
                             placeholder="Your summary will appear here for editing..."
                             rows="12"
                         ></textarea>
                     </div>
                 </div>
 
-                <div class="sharing-container">
-                    <h3>Share Summary</h3>
+                <div class="sharing-container modern-card">
+                    <h3>📧 Share Summary</h3>
                     
-                    <div class="email-form">
-                        <div class="form-group">
-                            <label for="email-recipients">Recipients</label>
+                    <div class="email-form modern-form">
+                        <div class="form-group modern-form-group">
+                            <label for="email-recipients" class="modern-label">
+                                <span class="label-icon">👥</span>
+                                <span>Recipients</span>
+                            </label>
                             <input 
                                 type="email" 
                                 id="email-recipients" 
-                                class="email-input"
+                                class="email-input modern-input"
                                 placeholder="Enter email addresses separated by commas"
                                 multiple
                             >
-                            <div class="input-help">Separate multiple emails with commas</div>
+                            <div class="input-help modern-help">
+                                <span class="help-icon">💡</span>
+                                Separate multiple emails with commas
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="email-subject">Subject</label>
+                        <div class="form-group modern-form-group">
+                            <label for="email-subject" class="modern-label">
+                                <span class="label-icon">📋</span>
+                                <span>Subject</span>
+                            </label>
                             <input 
                                 type="text" 
                                 id="email-subject" 
-                                class="subject-input"
+                                class="subject-input modern-input"
                                 placeholder="Meeting Summary - [Date]"
                             >
                         </div>
 
-                        <div class="form-group">
-                            <label for="email-message">Custom Message (Optional)</label>
+                        <div class="form-group modern-form-group">
+                            <label for="email-message" class="modern-label">
+                                <span class="label-icon">💬</span>
+                                <span>Custom Message (Optional)</span>
+                            </label>
                             <textarea 
                                 id="email-message" 
-                                class="message-textarea"
+                                class="message-textarea modern-textarea"
                                 placeholder="Add a personal message to include with the summary..."
                                 rows="3"
                             ></textarea>
                         </div>
 
                         <div class="email-actions">
-                            <button type="button" id="preview-email" class="btn btn-secondary">Preview</button>
-                            <button type="button" id="send-email" class="btn btn-primary" disabled>
-                                Send Summary
+                            <button type="button" id="preview-email" class="btn btn-secondary modern-btn">
+                                <span class="btn-icon">👁️</span>
+                                <span>Preview</span>
+                            </button>
+                            <button type="button" id="send-email" class="btn btn-primary modern-btn btn-large" disabled>
+                                <span class="btn-icon">📧</span>
+                                <span>Send Summary</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <div class="section-actions">
-                    <button type="button" id="back-to-summary" class="btn btn-secondary">Back</button>
-                    <button type="button" id="start-new" class="btn btn-outline">Start New Summary</button>
+                    <button type="button" id="back-to-summary" class="btn btn-secondary modern-btn">
+                        <span class="btn-arrow">←</span>
+                        <span>Back</span>
+                    </button>
+                    <button type="button" id="start-new" class="btn btn-outline modern-btn">
+                        <span class="btn-icon">🔄</span>
+                        <span>Start New Summary</span>
+                    </button>
                 </div>
             </section>
         </main>
 
         <!-- Global Messages and Modals -->
-        <div id="message-container" class="message-container"></div>
+        <div id="message-container" class="message-container modern-messages"></div>
         
-        <div id="email-preview-modal" class="modal hidden">
-            <div class="modal-content">
+        <div id="email-preview-modal" class="modal modern-modal hidden">
+            <div class="modal-content glass-card">
                 <div class="modal-header">
-                    <h3>Email Preview</h3>
-                    <button type="button" class="modal-close">&times;</button>
+                    <h3>📧 Email Preview</h3>
+                    <button type="button" class="modal-close modern-close">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <div id="email-preview-content" class="email-preview"></div>
+                    <div id="email-preview-content" class="email-preview modern-preview"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="confirm-send">Send Email</button>
+                    <button type="button" class="btn btn-secondary modern-btn modal-cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary modern-btn" id="confirm-send">
+                        <span class="btn-icon">📧</span>
+                        <span>Send Email</span>
+                    </button>
                 </div>
             </div>
         </div>
